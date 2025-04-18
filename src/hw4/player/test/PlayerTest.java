@@ -1,4 +1,5 @@
 package hw4.player.test;
+import player.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -10,7 +11,6 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import hw4.player.Player;
 import maze.Cell;
 import maze.CellComponents;
 import maze.Grid;
