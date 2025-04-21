@@ -113,14 +113,35 @@ public class Game {
 		 
 		} 
 		
+		public void printGame() {
+			for(int i = 0; i<grid.getRows().size(); i++) {
+				Row row = grid.getRows().get(i);
+				for(int j = 0; j<row.getCells().size();j++) {
+					if(player.getCurrentRow() == row && player.getCurrentCell()== row.getCells().get(j)) {
+						System.out.printf("A ");
+					}
+					else if(j == 0 && row.getCells().get(j).getLeft()==CellComponents.EXIT) {
+						System.out.printf("E ");
+					}
+					else {
+						System.out.printf("S ");
+					}
+					
+				}
+				System.out.println();
+				
+			}
+			System.out.println();
+		}
 		
-		
-		
-		
-		
-		
-		
-		
+		public boolean playerStatus() {
+			Cell current = player.getCurrentCell();
+			int columnIndex = player.getCurrentRow().getCells().indexOf(current); 
+			if(columnIndex == 0 && current.getLeft()==CellComponents.EXIT) {
+				return true; 
+			}
+			return false; 
+		}
 	}
 	
 	
