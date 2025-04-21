@@ -83,8 +83,46 @@ public class Game {
 		return player;
 	}
 	
+	public Boolean movePlayer(Movement direction) {
+		int rowIndex = grid.getRows().indexOf(player.getCurrentRow()); 
+		int columnIndex= player.getCurrentRow().getCells().indexOf(player.getCurrentCell());
+		int nCol = columnIndex;
+		int nRow = rowIndex; 
+		
+		Cell current = player.getCurrentCell();
+		switch (direction) {
+		case LEFT:
+		if(current.getLeft() == CellComponents.APERTURE || current.getLeft() == CellComponents.EXIT && columnIndex > 0) nCol--; 
+		else return false; 
+		break;
+		case RIGHT:
+		if(current.getRight() == CellComponents.APERTURE && columnIndex < grid.getRows().get(0).getCells().size()-1) nCol++; 
+		else return false; 
+		break;
+		case UP:
+		if(current.getUp()==CellComponents.APERTURE && rowIndex>0) nRow--; 
+		else return false;
+		break;
+		case DOWN:
+		if(current.getDown() == CellComponents.APERTURE && rowIndex < grid.getRows().size()-1)nRow++;
+		else return false;
+		break;
+		}
+		player = new Player(grid.getRows().get(nRow), grid.getRows().get(nRow).getCells().get(nCol));
+		return true; 
+		 
+		} 
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	}
 	
 	
 	
-	
-}
+
