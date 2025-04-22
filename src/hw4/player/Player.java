@@ -10,6 +10,14 @@ public class Player {
 		this.currentCell = currCell;
 	}
 
+	public void setCurrentCell(Cell cell) {
+		this.currentCell = cell;
+	}
+
+	public void setCurrentRow(Row row) {
+		this.currentRow = row;
+	}
+	
 	public Cell getCurrentCell() {
 		return currentCell;
 	}
