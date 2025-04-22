@@ -82,42 +82,43 @@ public Grid createRandomGrid(int size) {
 	if(size<3 || size>7) {
 		return null;
 	}
-	 ArrayList<Row> rows = new ArrayList<>();
-	 Random rand1 = new Random(); 
-	 int exitRow = rand1.nextInt(size); 
-	
-	for(int i=0;i<size;i++) {
+	Random rand = new Random();
+	ArrayList<Row> rows = new ArrayList<>();
+
+	int exitRow = rand.nextInt(size);
+
+	for (int i = 0; i < size; i++) {
 		ArrayList<Cell> cells = new ArrayList<>();
-		for(int j=0;j<size-1;j++) {
-		CellComponents left = randomComponent(rand1);
-        CellComponents right = randomComponent(rand1);
-        CellComponents up = randomComponent(rand1);
-        CellComponents down = randomComponent(rand1);
-			
-		if(j==0 && i== exitRow) {
-			left = CellComponents.EXIT;
-		}
-		
-		if(left!= CellComponents.APERTURE && right != CellComponents.APERTURE && up!= CellComponents.APERTURE && down != CellComponents.APERTURE && !(j==0 && i ==exitRow)) {
-			int rand2 = rand1.nextInt(4);
-			if(rand2==0) {
-				down = CellComponents.APERTURE;
+		for (int j = 0; j < size; j++) {
+			CellComponents left = CellComponents.WALL;
+			CellComponents right = CellComponents.WALL;
+			CellComponents up = CellComponents.WALL;
+			CellComponents down = CellComponents.WALL;
+
+			if (j == 0 && i == exitRow) {
+				left = CellComponents.EXIT;
 			}
-			if(rand2==1) {
+
+			int apertureSide = rand.nextInt(4);
+			if (apertureSide == 0) {
 				left = CellComponents.APERTURE;
 			}
-			if(rand2==2) {
+			else if (apertureSide == 1) {
 				right = CellComponents.APERTURE;
 			}
-			if(rand2==2) {  // Should be 3?
+			else if (apertureSide == 2) {
 				up = CellComponents.APERTURE;
 			}
-		}
-		cells.add(new Cell(left, right, up, down));
+			else { 
+				down = CellComponents.APERTURE;
+			}
+
+			Cell cell = new Cell(left, right, up, down);
+			cells.add(cell);
 		}
 		rows.add(new Row(cells));
 	}
-	
+
 	for(int i=0;i<size;i++) {
 		for(int j=0;j<size-1;j++) {
 			Cell left = rows.get(i).getCells().get(j);
@@ -134,15 +135,6 @@ public Grid createRandomGrid(int size) {
 		}
 	}
 	return new Grid(rows);
-}
-
-private CellComponents randomComponent(Random rand1) {
-	if(rand1.nextBoolean()) {
-		return CellComponents.APERTURE; 
-	}
-	else {
-		return CellComponents.WALL;
-	}	
 }
 
 @Override
