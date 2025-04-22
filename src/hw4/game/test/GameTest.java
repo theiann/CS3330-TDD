@@ -27,7 +27,7 @@ class GameTest {
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
 		setupGame(); // initialize a grid
-		game = new Game(grid);	
+		game = new Game(grid);
 	}
 
 	@AfterAll

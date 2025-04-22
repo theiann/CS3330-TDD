@@ -115,7 +115,7 @@ public Grid createRandomGrid(int size) {
 			if(rand2==2) {
 				right = CellComponents.APERTURE;
 			}
-			if(rand2==2) {
+			if(rand2==2) {  // Should be 3?
 				up = CellComponents.APERTURE;
 			}
 		}
@@ -127,15 +127,15 @@ public Grid createRandomGrid(int size) {
 	for(int i=0;i<size;i++) {
 		for(int j=0;j<size-1;j++) {
 			Cell left = rows.get(i).getCells().get(j);
-			Cell right = rows.get(i).getCells().get(j+1);
+			Cell right = rows.get(i).getCells().get(j); //deleted +1 to j NEEDS FIXING
 			left.setRight(right.getLeft());
 		}
 	}
 	
-	for(int j=0;j<size;j++) {
-		for(int i=0;i<size-1;i++) {
+	for(int i=0;i<size;i++) { // swapped j to i
+		for(int j=0;j<size-1;j++) { //swapped i to j
 			Cell top = rows.get(i).getCells().get(j);
-			Cell bottom = rows.get(i+1).getCells().get(j);
+			Cell bottom = rows.get(i).getCells().get(j); // deleted +1 to i NEEDS FIXING
 			top.setDown(bottom.getUp());
 		}
 	}
