@@ -141,6 +141,34 @@ public Grid createRandomGrid(int size) {
 
 	return g; 
 }
+
+public void printGame(Player player) {
+	if(grid == null) {
+		return ;
+	}
+	if(player == null) {
+		return;
+	}
+	ArrayList<Row> rows = grid.getRows();
+	for(int i =0;i<rows.size();i++) {
+		ArrayList<Cell> cells = rows.get(i).getCells();
+		for(int j=0;j<cells.size();j++) {
+			Cell cell = cells.get(j);
+			if(player.getCurrentRow()==rows.get(i) && player.getCurrentCell()==cell) {
+				System.out.print("A ");
+			}
+			else if(cell.getLeft()==CellComponents.EXIT && j==0) {
+				System.out.print("E ");
+			}
+			else {
+				System.out.print("S " );
+			}
+		}
+		System.out.println("");
+	}
+	
+	System.out.print("\n");
+}
  
 @Override
 public String toString() { 
