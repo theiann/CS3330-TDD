@@ -10,10 +10,10 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import maze.Cell;
-import maze.CellComponents;
-import maze.Grid;
-import maze.Row;
+import hw4.maze.Cell;
+import hw4.maze.CellComponents;
+import hw4.maze.Grid;
+import hw4.maze.Row;
 
 class GridTest {
 
