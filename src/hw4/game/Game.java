@@ -154,7 +154,7 @@ public void printGame(Player player) {
 		ArrayList<Cell> cells = rows.get(i).getCells();
 		for(int j=0;j<cells.size();j++) {
 			Cell cell = cells.get(j);
-			if(player.getCurrentRow()==rows.get(i) && player.getCurrentCell()==cell) {
+			if(cell == player.getCurrentCell()) {
 				System.out.print("A ");
 			}
 			else if(cell.getLeft()==CellComponents.EXIT && j==0) {
