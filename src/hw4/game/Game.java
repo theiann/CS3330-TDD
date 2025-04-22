@@ -118,28 +118,33 @@ public Grid createRandomGrid(int size) {
 		}
 		rows.add(new Row(cells));
 	}
+	Grid g = new Grid(rows);
 
-	for(int i=0;i<size;i++) {
-		for(int j=0;j<size-1;j++) {
-			Cell left = rows.get(i).getCells().get(j);
-			Cell right = rows.get(i).getCells().get(j); //deleted +1 to j NEEDS FIXING
-			left.setRight(right.getLeft());
+	for (int i = 0; i < size; i++) {
+		Row row = rows.get(i);
+		for (int j = 0; j < size; j++) {
+			Cell current = row.getCells().get(j);
+
+			if (j < size - 1) {
+			Cell rightCell = row.getCells().get(j + 1);
+			current.setRight(rightCell.getLeft());
+			rightCell.setLeft(current.getRight());
+			}
+
+			if (i < size - 1) {
+			Cell below = rows.get(i + 1).getCells().get(j);
+			current.setDown(below.getUp());
+			below.setUp(current.getDown());
 		}
+		} 
 	}
-	
-	for(int i=0;i<size;i++) { // swapped j to i
-		for(int j=0;j<size-1;j++) { //swapped i to j
-			Cell top = rows.get(i).getCells().get(j);
-			Cell bottom = rows.get(i).getCells().get(j); // deleted +1 to i NEEDS FIXING
-			top.setDown(bottom.getUp());
-		}
-	}
-	return new Grid(rows);
+
+	return g; 
 }
-
+ 
 @Override
 public String toString() { 
-	return "Game [grid="+grid.toString()+"]";
+	return "Game [grid="+grid+"]";
 }
 
 }
