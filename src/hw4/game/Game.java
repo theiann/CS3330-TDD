@@ -101,7 +101,9 @@ public Grid createRandomGrid(int size) {
 
 			int apertureSide = rand.nextInt(4);
 			if (apertureSide == 0) {
-				left = CellComponents.APERTURE;
+				if(!(j==0 && i==exitRow)) {
+					left = CellComponents.APERTURE;
+				}
 			}
 			else if (apertureSide == 1) {
 				right = CellComponents.APERTURE;
@@ -112,7 +114,7 @@ public Grid createRandomGrid(int size) {
 			else { 
 				down = CellComponents.APERTURE;
 			}
-
+			
 			Cell cell = new Cell(left, right, up, down);
 			cells.add(cell);
 		}
@@ -150,6 +152,8 @@ public void printGame(Player player) {
 		return;
 	}
 	ArrayList<Row> rows = grid.getRows();
+	
+	
 	for(int i =0;i<rows.size();i++) {
 		ArrayList<Cell> cells = rows.get(i).getCells();
 		for(int j=0;j<cells.size();j++) {
@@ -157,7 +161,7 @@ public void printGame(Player player) {
 			if(cell == player.getCurrentCell()) {
 				System.out.print("A ");
 			}
-			else if(cell.getLeft()==CellComponents.EXIT && j==0) {
+			else if(j==0 && cell.getLeft()==CellComponents.EXIT) {
 				System.out.print("E ");
 			}
 			else {
