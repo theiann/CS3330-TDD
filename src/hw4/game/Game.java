@@ -1,7 +1,8 @@
 package hw4.game;
 
 import java.util.Random;
-
+import hw4.maze.CellComponents;
+import hw4.maze.Cell;
 import hw4.maze.*;
 import hw4.maze.Row;
 import hw4.player.*;
@@ -18,7 +19,7 @@ public Game(Grid grid) {
 
 public Game (int size) {
 	if(size>=3 && size<=7) {
-		this.grid=createRandomgrid()size;
+		this.grid=createRandomGrid(size);
 	}
 	else {
 		this.grid=null;
@@ -82,6 +83,75 @@ public boolean play(Movement move, Player player) {
 	player.setCurrentCell(grid.getRows().get(nRow).getCells().get(nCol));
 	return true; 
 }
+
+public Grid createRandomGrid(int size) {
+	if(size<3 || size>7) {
+		return null;
+	}
+	 ArrayList<Row> rows = new ArrayList<>();
+	 Random rand1 = new Random(); 
+	 int exitRow = rand1.nextInt(size); 
+	
+	for(int i=0;i<size;i++) {
+		ArrayList<Cell> cells = new ArrayList<>();
+		for(int j=0;j<size-1;j++) {
+		CellComponents left = randomComponent(rand1);
+        CellComponents right = randomComponent(rand1);
+        CellComponents up = randomComponent(rand1);
+        CellComponents down = randomComponent(rand1);
+			
+		if(j==0 && i== exitRow) {
+			left = CellComponents.EXIT;
+		}
+		
+		if(left!= CellComponents.APERTURE && right != CellComponents.APERTURE && up!= CellComponents.APERTURE && down != CellComponents.APERTURE && !(j==0 && i ==exitRow)) {
+			int rand2 = rand1.nextInt(4);
+			if(rand2==0) {
+				down = CellComponents.APERTURE;
+			}
+			if(rand2==1) {
+				left = CellComponents.APERTURE;
+			}
+			if(rand2==2) {
+				right = CellComponents.APERTURE;
+			}
+			if(rand2==2) {
+				up = CellComponents.APERTURE;
+			}
+		}
+		cells.add(new Cell(left, right, up, down));
+		}
+		rows.add(new Row(cells));
+	}
+	
+	for(int i=0;i<size;i++) {
+		for(int j=0;j<size-1;j++) {
+			Cell left = rows.get(i).getCells().get(j);
+			Cell right = rows.get(i).getCells().get(j+1);
+			left.setRight(right.getLeft());
+		}
+	}
+	
+	for(int j=0;j<size;j++) {
+		for(int i=0;i<size-1;i++) {
+			Cell top = rows.get(i).getCells().get(j);
+			Cell bottom = rows.get(i+1).getCells().get(j);
+			top.setDown(bottom.getUp());
+		}
+	}
+	return new Grid(rows);
+}
+
+private CellComponents randomComponent(Random rand1) {
+	if(rand1.nextBoolean()) {
+		return CellComponents.APERTURE; 
+	}
+	else {
+		return CellComponents.WALL;
+	}	
+}
+
+
 
 }
 	
