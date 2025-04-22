@@ -27,7 +27,7 @@ public Game (int size) {
 }
 
 public Grid getGrid() {
-	return grid;
+	return this.grid;
 }
 
 public void setGrid(Grid grid) {
@@ -38,51 +38,45 @@ public boolean play(Movement move, Player player) {
 	if(grid == null || player == null || move == null) {
 		return false;
 	}
+	 ArrayList<Row> rows= grid.getRows();
+	Row currRow = player.getCurrentRow();
+	Cell currCell = player.getCurrentCell();
+	int rowIndex=rows.indexOf(currRow);
+	int colIndex= currRow.getCells().indexOf(currCell);
 	
-	int colIndex = player.getCurrentRow().getCells().indexOf(player.getCurrentCell());
-	int rowIndex = grid.getRows().indexOf(player.getCurrentRow());
-	int nRow = rowIndex;
-	int nCol= colIndex;
-	Cell current = player.getCurrentCell();
-	
-	switch(move) {
+	switch (move) {
 	case UP:
-		if(current.getUp()== CellComponents.APERTURE && rowIndex>0) {
-			nRow--;
-		}
-		else {
-			return false;
+		if (currCell.getUp() == CellComponents.APERTURE && rowIndex > 0) {
+		player.setCurrentRow(rows.get(rowIndex - 1));
+		player.setCurrentCell(rows.get(rowIndex - 1).getCells().get(colIndex));
+		return true;
 		}
 		break;
 	case DOWN:
-		if(current.getDown()==CellComponents.APERTURE && rowIndex<grid.getRows().size()-1) {
-			nRow++;
-		}
-		else {
-			return false; 
+		if (currCell.getDown() == CellComponents.APERTURE && rowIndex < rows.size() - 1) {
+		player.setCurrentRow(rows.get(rowIndex + 1));
+		player.setCurrentCell(rows.get(rowIndex + 1).getCells().get(colIndex));
+		return true;
 		}
 		break;
 	case LEFT:
-		if((current.getLeft()==CellComponents.APERTURE || current.getLeft()==CellComponents.EXIT) && colIndex>0) {
-			nCol--;
-		}
-		else {
-			return false; 
+		if (currCell.getLeft() == CellComponents.APERTURE && colIndex > 0) {
+		player.setCurrentCell(currRow.getCells().get(colIndex - 1));
+		return true;
+		} else if (currCell.getLeft() == CellComponents.EXIT && colIndex == 0) {
+		player.setCurrentCell(currCell); 
+		return true;
 		}
 		break;
 	case RIGHT:
-		if(current.getRight()==CellComponents.APERTURE && colIndex<grid.getRows().get(0).getCells().size()-1) {
-			nCol++;
-		}
-		else {
-			return false; 
+		if (currCell.getRight() == CellComponents.APERTURE && colIndex < currRow.getCells().size() - 1) {
+		player.setCurrentCell(currRow.getCells().get(colIndex + 1));
+		return true;
 		}
 		break;
-	}
-	player.setCurrentRow(grid.getRows().get(nRow));
-	player.setCurrentCell(grid.getRows().get(nRow).getCells().get(nCol));
-	return true; 
-}
+} 
+	return false;
+} 
 
 public Grid createRandomGrid(int size) {
 	if(size<3 || size>7) {
