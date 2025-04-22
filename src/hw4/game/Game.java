@@ -63,7 +63,7 @@ public boolean play(Movement move, Player player) {
 		}
 		break;
 	case LEFT:
-		if(current.getLeft()==CellComponents.APERTURE || current.getLeft()==CellComponents.EXIT && colIndex>0) {
+		if((current.getLeft()==CellComponents.APERTURE || current.getLeft()==CellComponents.EXIT) && colIndex>0) {
 			nCol--;
 		}
 		else {
@@ -151,7 +151,8 @@ private CellComponents randomComponent(Random rand1) {
 	}	
 }
 
-public String tostring() {
+@Override
+public String toString() { 
 	return "Game [grid="+grid.toString()+"]";
 }
 

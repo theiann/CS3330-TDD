@@ -2,35 +2,58 @@ package main;
 import java.util.Scanner;
 
 import hw4.game.*;
+import hw4.maze.Cell;
+import hw4.maze.CellComponents;
+import hw4.maze.Grid;
+import hw4.maze.Row;
+import hw4.player.Player;
 
 public class Main {
 
 	public static void main(String[] args) {
+		Game game = new Game(5);
+		Grid grid = game.getGrid();
+		Player player = new Player(grid.getRows().get(4),grid.getRows().get(4).getCells().get(4));
 		Scanner scanner = new Scanner(System.in);
-		Game game = new Game();
-		
-		System.out.println("Tears, Despair and Debugging!");
-		game.printGame();
-		
-		boolean status = game.playerStatus();
-		while(status != true) {
-			System.out.println("Choose weather you want to move UP,DOWN,LEFT, or RIGHT!");
-			String input = scanner.nextLine().toUpperCase();
+		System.out.println("Tears Despair and Debugging");
+		printGameInfo(grid,player);
+		while(true) {
+			System.out.println("Choose the direction you want to Move: UP, Down, Left or Right");
+			String move = scanner.nextLine().toUpperCase();
 			
-			try {
-				Movement move = Movement.valueOf(input);
-				Boolean status2 = game.movePlayer(move);
-				if(status2 == false) {
-					System.out.println("Are you an idiot? You can't move there!");
-				}
-			}catch(IllegalArgumentException e) { 
-				System.out.println("Your Input was Invalid. Try again");
+		try {
+			Movement direction = Movement.valueOf(move);
+			boolean status = game.play(direction, player);
+			if(status == true) {
+				System.out.println("Nice Move!");
 			}
-			game.printGame();
+			else {
+				System.out.println("You Can't go there");
+			}
+			printGameInfo(grid,player);
+		}catch(IllegalArgumentException e){
+			System.out.println("Invalid Movement");
 		}
-		
-		System.out.println("You Escaped the matrix! Grrr, You won't be so lucky next time");
-		scanner.close();
-	}
-
+		}
 }
+	private static void printGameInfo( Grid grid, Player player) {
+int size = grid.getRows().size();
+        
+        for (int i = 0; i < size; i++) {
+            Row row = grid.getRows().get(i);
+            for (int j = 0; j < size; j++) {
+                Cell cell = row.getCells().get(j);
+                if (player.getCurrentRow() == row && player.getCurrentCell() == cell) {
+                    System.out.print("A ");
+                } 
+                else if (j == 0 && cell.getLeft() == CellComponents.EXIT) {
+                    System.out.print("E ");
+                } 
+                else {
+                    System.out.print("S ");
+                }
+            }
+            System.out.println();
+        }
+    }
+} 
