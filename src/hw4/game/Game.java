@@ -151,7 +151,9 @@ private CellComponents randomComponent(Random rand1) {
 	}	
 }
 
-
+public String tostring() {
+	return "Game [grid="+grid.toString()+"]";
+}
 
 }
 	
