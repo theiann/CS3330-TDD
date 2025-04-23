@@ -135,15 +135,16 @@ public Grid createRandomGrid(int size) {
 			}
 
 			int apertureSide = rand.nextInt(4);
-			if (apertureSide == 0) {
+			int apertureSide2 = rand.nextInt(4);
+			if (apertureSide == 0 || apertureSide2 == 0) {
 				if(!(j==0 && i==exitRow)) {
 					left = CellComponents.APERTURE;
 				}
 			}
-			else if (apertureSide == 1) {
+			else if (apertureSide == 1 || apertureSide2 == 1) {
 				right = CellComponents.APERTURE;
 			}
-			else if (apertureSide == 2) {
+			else if (apertureSide == 2 || apertureSide2 == 2) {
 				up = CellComponents.APERTURE;
 			}
 			else { 
