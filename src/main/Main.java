@@ -11,6 +11,15 @@ import hw4.player.*;
 
 public class Main {
 
+	
+	/**
+	 * The main method starts and runs the grid game. 
+	 * It initially creates a 5x5 grid, and uses scanner to get player input
+	 * It enters a while to process all the movement inputs until the player types EXIT to quit.
+	 * It also uses a Try Catch to determine weather the input was valid or not. Prints invalid movemnt if not 
+	 * 
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		Game game = new Game(5);
 		Grid grid = game.getGrid();

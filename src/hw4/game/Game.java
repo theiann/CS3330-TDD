@@ -12,11 +12,20 @@ import java.util.ArrayList;
 
 public class Game {
 private Grid grid;
-
+/**
+ * Constructor for the game with the specified grid
+ * @param grid
+ */
 public Game(Grid grid) {
 	this.grid=grid; 
 }
 
+/**
+ * this method checks to see if the passed size value is valid to create
+ * the grid, and if it is, sets the grid to the method call of createRandomGrid,
+ * which creates the grid
+ * @param size
+ */
 public Game (int size) {
 	if(size>=3 && size<=7) {
 		this.grid=createRandomGrid(size);
@@ -26,14 +35,31 @@ public Game (int size) {
 	}
 }
 
+/**
+ * getter for the grid
+ * @return grid
+ */
 public Grid getGrid() {
 	return this.grid;
 }
 
+/**
+ * setter for the grid
+ * @param grid
+ */
 public void setGrid(Grid grid) {
 	this.grid = grid; 
 }
 
+/**
+ * After the move and player parameters are passed to this method, it
+ * first checks if everything is valid, and then if the move is valid, it uses the 
+ * passed player param to find its current location and perform the directional movement
+ * using a switch case. Move fails if player moves into wall or outside grid
+ * @param move
+ * @param player
+ * @return
+ */
 public boolean play(Movement move, Player player) {
 	if(grid == null || player == null || move == null) {
 		return false;
@@ -78,6 +104,15 @@ public boolean play(Movement move, Player player) {
 	return false;
 } 
 
+/**
+ * this creates a random grid of the sent size value. This makes it so the grid will have 
+ * one exit on the left most column, on a random row. It also makes it so each cell will have 
+ * at least one APERTURE on one of its sides. Uses random number between 0 and 3 to pick which side the aperture
+ * is it, after initially assigning everything to wall
+ * 
+ * @param size
+ * @return a randomly generated grid
+ */
 public Grid createRandomGrid(int size) {
 	if(size<3 || size>7) {
 		return null;
@@ -144,6 +179,12 @@ public Grid createRandomGrid(int size) {
 	return g; 
 }
 
+
+/**
+ * This creates a visual representation of the grid, and can be called after every move. 
+ * The player is represented by A, the Exit by E and cells by S
+ * @param player
+ */
 public void printGame(Player player) {
 	if(grid == null) {
 		return ;
@@ -174,6 +215,9 @@ public void printGame(Player player) {
 	System.out.print("\n");
 }
  
+/**
+ * simply returns a string representation of the game
+ */
 @Override
 public String toString() { 
 	return "Game [grid="+grid+"]";
